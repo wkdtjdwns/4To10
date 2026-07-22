@@ -1,0 +1,148 @@
+<UserControl x:Class="FourTen.Views.GameView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent"
+             FontFamily="{StaticResource AppFont}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- 상단 바 -->
+        <Grid Grid.Row="0" Margin="14,16,14,0">
+            <Button Style="{StaticResource IconButton}" HorizontalAlignment="Left"
+                    Content="☰" FontSize="24" Click="Menu_Click"/>
+            <Border HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="{StaticResource TextBrush}"
+                    BorderThickness="1.4" CornerRadius="4" Padding="11,1">
+                <TextBlock x:Name="CounterText" Text="1 / 25" Foreground="{StaticResource TextBrush}"
+                           FontSize="15" FontWeight="Light" LineHeight="17" LineStackingStrategy="BlockLineHeight"
+                           HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+            </Border>
+        </Grid>
+
+        <!-- 가운데 결과 -->
+        <TextBlock x:Name="ResultText" Grid.Row="1" Text="?"
+                   FontSize="66" FontWeight="Thin"
+                   Foreground="{StaticResource TextBrush}"
+                   HorizontalAlignment="Center" VerticalAlignment="Top"
+                   Margin="0,120,0,0"/>
+
+        <!-- 수식 바 -->
+        <Grid Grid.Row="2" Margin="0,0,0,26">
+            <Border HorizontalAlignment="Stretch" Height="1.2" VerticalAlignment="Top"
+                    Background="#14FFFFFF" Margin="16,0,16,0"/>
+            <StackPanel x:Name="ExprBar" Orientation="Horizontal"
+                        HorizontalAlignment="Center" VerticalAlignment="Center"
+                        Margin="0,26,0,0"/>
+        </Grid>
+
+        <!-- 팔레트 -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center"
+                    Margin="0,0,0,14">
+            <Button x:Name="BtnOpen"  Style="{StaticResource PaletteButton}" Content="("  Click="Palette_Click" Tag="("/>
+            <Button x:Name="BtnPlus"  Style="{StaticResource PaletteButton}" Content="+"  Click="Palette_Click" Tag="+"/>
+            <Button x:Name="BtnMinus" Style="{StaticResource PaletteButton}" Content="−"  Click="Palette_Click" Tag="-"/>
+            <Button x:Name="BtnTimes" Style="{StaticResource PaletteButton}" Content="×"  Click="Palette_Click" Tag="*"/>
+            <Button x:Name="BtnDiv"   Style="{StaticResource PaletteButton}" Content="÷"  Click="Palette_Click" Tag="/"/>
+            <Button x:Name="BtnClose" Style="{StaticResource PaletteButton}" Content=")"  Click="Palette_Click" Tag=")"/>
+        </StackPanel>
+
+        <!-- 하단 아이콘 -->
+        <Grid Grid.Row="4" Margin="16,0,16,20">
+            <Button Style="{StaticResource IconButton}" HorizontalAlignment="Left"
+                    Content="?" FontSize="20" Click="Hint_Click"
+                    ToolTip="힌트">
+                <Button.Resources>
+                    <Style TargetType="Border"/>
+                </Button.Resources>
+            </Button>
+            <Button Style="{StaticResource IconButton}" HorizontalAlignment="Right"
+                    Content="↻" FontSize="22" Click="Reset_Click" ToolTip="초기화"/>
+        </Grid>
+
+        <!-- 힌트 패널 -->
+        <Border x:Name="HintPanel" Grid.RowSpan="5" Visibility="Collapsed"
+                Background="#DA060A11" >
+            <Border Background="#122232" CornerRadius="18" Padding="26,24"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    BorderBrush="#2A4460" BorderThickness="1" Width="332">
+                <StackPanel>
+                    <TextBlock Text="힌트" FontSize="24" FontWeight="Light"
+                               Foreground="{StaticResource TextBrush}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="정답 수식의 일부를 알려줍니다" FontSize="12"
+                               Foreground="{StaticResource DimTextBrush}"
+                               HorizontalAlignment="Center" Margin="0,5,0,0"/>
+
+                    <Button Content="1  ·  순서 힌트  (숫자 순서)" Margin="0,20,0,0"
+                            Click="HintNumbers_Click" Style="{StaticResource HintButton}"/>
+                    <Button Content="2  ·  연산자 힌트  (기호 순서)"
+                            Click="HintOps_Click" Style="{StaticResource HintButton}"/>
+
+                    <Border Background="#0A131F" CornerRadius="12" Margin="0,18,0,0" Padding="16,18"
+                            MinHeight="62" BorderBrush="#1C2A3A" BorderThickness="1">
+                        <TextBlock x:Name="HintContent" Text="위 버튼을 눌러 보세요"
+                                   Foreground="{StaticResource AccentBrush}" FontSize="22"
+                                   FontWeight="Light" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                   TextWrapping="Wrap" TextAlignment="Center"/>
+                    </Border>
+
+                    <Button Content="닫기" Margin="0,18,0,0" Click="HintClose_Click"
+                            Style="{StaticResource IconButton}" HorizontalAlignment="Center"
+                            FontSize="15" Foreground="{StaticResource DimTextBrush}"/>
+                </StackPanel>
+            </Border>
+        </Border>
+
+        <!-- 성공 오버레이 -->
+        <Border x:Name="SuccessPanel" Grid.RowSpan="5" Visibility="Collapsed"
+                Background="#D0060A11">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="10" FontSize="96" FontWeight="Thin"
+                           Foreground="{StaticResource SuccessBrush}" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="SuccessExpr" Text="" FontSize="20" FontWeight="Light"
+                           Foreground="{StaticResource TextBrush}" HorizontalAlignment="Center"
+                           Margin="0,4,0,0"/>
+                <TextBlock Text="정답입니다!" FontSize="22" FontWeight="Light"
+                           Foreground="{StaticResource TextBrush}" HorizontalAlignment="Center"
+                           Margin="0,18,0,0"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,28,0,0">
+                    <Button Content="스테이지 선택" Click="Menu_Click" Margin="0,0,8,0"
+                            Foreground="{StaticResource TextBrush}" Cursor="Hand" FontSize="15">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="bd" Background="#1E3A5A" CornerRadius="20" Padding="18,10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bd" Property="Background" Value="#2C5075"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button x:Name="NextButton" Content="다음 스테이지 ▶" Click="Next_Click" Margin="8,0,0,0"
+                            Foreground="#08120C" Cursor="Hand" FontSize="15" FontWeight="SemiBold">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="bd" Background="#5FD08A" CornerRadius="20" Padding="18,10">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bd" Property="Background" Value="#77E0A0"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</UserControl>

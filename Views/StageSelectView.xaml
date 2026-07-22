@@ -1,0 +1,47 @@
+<UserControl x:Class="FourTen.Views.StageSelectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent"
+             FontFamily="{StaticResource AppFont}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- 타이틀 -->
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,54,0,0">
+            <TextBlock Text="4 = 10" FontSize="52" FontWeight="Thin"
+                       Foreground="{StaticResource TextBrush}" HorizontalAlignment="Center"/>
+            <TextBlock Text="STAGE SELECT" FontSize="13" FontWeight="Light"
+                       Foreground="{StaticResource DimTextBrush}"
+                       HorizontalAlignment="Center" Margin="0,6,0,0"/>
+        </StackPanel>
+
+        <!-- 이어서 하기 -->
+        <Button x:Name="ContinueButton" Grid.Row="1" Click="Continue_Click"
+                Content="▶  이어서 하기" HorizontalAlignment="Center" Margin="0,22,0,10"
+                Foreground="{StaticResource TextBrush}" Cursor="Hand"
+                FontSize="15" FontWeight="Light">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="bd" Background="#1E3A5A" CornerRadius="20" Padding="22,10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="#2C5075"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+
+        <!-- 스테이지 격자 -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Margin="0,6,0,14">
+            <WrapPanel x:Name="StagePanel" Width="400" HorizontalAlignment="Center"
+                       Orientation="Horizontal"/>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

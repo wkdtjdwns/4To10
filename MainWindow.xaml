@@ -1,0 +1,44 @@
+<Window x:Class="FourTen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="4 = 10" Height="800" Width="452"
+        MinHeight="600" MinWidth="360"
+        Icon="icon.ico"
+        WindowStartupLocation="CenterScreen"
+        Background="#070B12"
+        FontFamily="{StaticResource AppFont}">
+
+    <Viewbox Stretch="Uniform">
+        <Grid Width="420" Height="760" ClipToBounds="True">
+
+            <!-- 하늘 -->
+            <Rectangle Fill="{StaticResource SkyBrush}"/>
+
+            <!-- 별 -->
+            <Canvas>
+                <Ellipse Canvas.Left="40"  Canvas.Top="90"  Width="2" Height="2" Fill="#AACfe8ff" Opacity="0.7"/>
+                <Ellipse Canvas.Left="120" Canvas.Top="60"  Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.6"/>
+                <Ellipse Canvas.Left="220" Canvas.Top="110" Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.5"/>
+                <Ellipse Canvas.Left="330" Canvas.Top="70"  Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.7"/>
+                <Ellipse Canvas.Left="380" Canvas.Top="150" Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.5"/>
+                <Ellipse Canvas.Left="70"  Canvas.Top="200" Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.4"/>
+                <Ellipse Canvas.Left="180" Canvas.Top="180" Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.5"/>
+                <Ellipse Canvas.Left="280" Canvas.Top="220" Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.4"/>
+                <Ellipse Canvas.Left="150" Canvas.Top="300" Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.3"/>
+                <Ellipse Canvas.Left="20"  Canvas.Top="140" Width="2" Height="2" Fill="#CCFFFFFF" Opacity="0.5"/>
+            </Canvas>
+
+            <!-- 먼 산(밝은 실루엣) -->
+            <Path Fill="{StaticResource MountainBrush}"
+                  Data="M 230,468 L 330,352 L 420,430 L 420,468 Z"/>
+
+            <!-- 앞쪽 땅(어두운 실루엣) -->
+            <Path Fill="{StaticResource GroundBrush}"
+                  Data="M 0,474 L 130,470 L 250,463 L 360,468 L 420,472 L 420,760 L 0,760 Z"/>
+
+            <!-- 화면(스테이지 선택 / 게임) -->
+            <ContentControl x:Name="Host"/>
+
+        </Grid>
+    </Viewbox>
+</Window>

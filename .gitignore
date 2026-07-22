@@ -1,0 +1,14 @@
+# .NET 빌드 산출물
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Rider
+.idea/
+
+# 기타
+*.log
